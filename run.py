@@ -5,9 +5,25 @@ from flask import Flask
 app = Flask(__name__)
 
 #we then initialise our app route decorator which will be our index page, then we add a function which will be bound to our decorator
+#here wer're going to add instructions on how to use our app
+#we say /username/message because in the web link we want this to display e.g. /victoria/hi there
 @app.route('/')
 def index():
-    return "<h1>Hello there!</h1>"
+    """Main page with instructions"""
+    return "To send a message use /USERNAME/MESSAGE"
+
+#note username in brackets is treated as a variable
+@app.route('/<username>')
+def user(username):
+    return "Hi " + username
+  
+# here we create a function for the message
+# we call the function send_message an this takes two arguments
+# we use a format method to format what we're returning, a return a string, the first part will be username and then we display our message
+@app.route('/<username>/<message>')
+def send_message(username, message):
+    return "{0}: {1}".format(username, message)
+
     
 
 # then beneath this we put app.run - this is similar to what we've done before but this time we pass it all in the bracketso that it's a shorter version
