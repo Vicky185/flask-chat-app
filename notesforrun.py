@@ -55,7 +55,11 @@ def index():
 @app.route('/<username>')
 def user(username):
     """Display chat messages"""
-    return "<h1>Welcome, {0}</h1>{1}".format(username, messages)
+    #we add the below passing through the chat template, then passing through the aguments username, this will be equal to the username that we're passing into this function. then chat_messges is going to equal our messsages list.
+    return render_template("chat.html", username = username, chat_messages = messages)
+
+    #we remove the below from the user view above and add in the new display chat messages by linking the chat.html template we have now created.
+   # return "<h1>Welcome, {0}</h1>{1}".format(username, messages)
   
 # here we create a function for the message
 # we call the function send_message an this takes two arguments
