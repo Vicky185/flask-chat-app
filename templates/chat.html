@@ -10,9 +10,60 @@
     <!-- we want to display a welcome message and the chat messages like before -->
     <!-- we say welcome in our header like before, then pass in the username variable from our view on run.py -->
     <!-- underneath this we put in the chat_messages variable -->
-    <h1>Welcome, {{ username }} </h1>
-    {{ chat_messages }}
+
+    <!-- we remove the below variable and the logic we're about to use is familiar from our Thorin and Company about page
+    chat_messages -->
+    <!-- we add in a for loop, using the notation for message in chat_messages
+    we also make sure we add in the endfor here too so we don't forget and the templating language knows where this block ends-->
+    <!-- so as we loop through the chat_messages list, message will be set to an individual message dictionary -->
+    <!-- each of these names following the dot corresponds with the name of one of the keys that's in our dictionary -->
+
     
+    <h1>Welcome, {{ username }}</h1>
+    
+    <!-- underneath our welcome, we create a form which inside is a text box for us to send our messages. We use textarea this time rather than input. we set the cols for columns, the rows and give attribute 4, we give it the name of message so that we can refer to it in run.py and we give it the ID of message which we'll need later -->
+    
+    <form method = "POST">
+        <textarea cols="50" rows="4" name="message" id="message"></textarea>
+        <br>
+        <button> Send message</button>
+    </form>
+    
+    {% for message in chat_messages %}
+        <p>({{ message.timestamp }}) {{ message.from }}: {{ message.message }}</p>
+    {% endfor %}
+    
+    <!-- here we're going to add some javascript. 
+    we create a variable: let timer = and then we call the built in javascript setTimeout() function that runs a function at a given interval. so my function is going to be location.reload, which will refresh the page. the second argument to my setTimeout() function is a time value which here is 5000 milliseconds    -->
+    <!-- now that we've fixed the sending of the form, we need to fix the times of refresh. 
+    above our timer variable we create a new variable - textbox. in this we access the id of the <p> above by calling on the message ID. then we add an event below the timer, which is onkeydown = function(e) so whenever a key is pressed in the textbox this function will be run.
+    
+    we then clear our the Timeout function and run the clearTimeout function with our timer variable. then we start the timer again using the setTimeout function, which is a repeat of the other timeout function. 
+    
+    the onkeydown() function runs whenevr there is a key press. the clearTimeout() function stops the timer and the code after starts it again
+    -->
+
+
+    <script>
+    
+        let textbox = document.getElementById("message")
+
+        let timer = setTimeout(function() {
+            location.reload();
+        }, 5000);
+        
+        textbox.onkeydown = function(e) {
+            
+            clearTimeout(timer)
+            
+            timer = setTimeout(function() {
+                location.reload();
+                }, 5000)
+        }
+        
+        
+        
+    </script>
     
     
     
